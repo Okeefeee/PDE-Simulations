@@ -42,7 +42,7 @@ def propogate(u):
     uf = fft(u) # Take the fast fourier transform of u
     ui = u
     for time in range(1,t_count):
-        nonlinear_terms = np.abs(ui[time-1])**(2*sigma + 1)
+        nonlinear_terms = np.abs(ui[time-1])**(2*sigma) * ui[time-1]
         for x in range(x_count):
             uf[time][x] = uf[time-1][x] - t_step * complex(0,1) *(k[x]**2 * uf[time-1][x] - fft(nonlinear_terms)[x])
         ui = ifft(uf)
