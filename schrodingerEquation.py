@@ -49,6 +49,12 @@ def propogate(u):
     return ui
 
 ui = propogate(u)
+ui = np.abs(ui)
+
+ui_max_value = ui
+
+for time in range(t_count):
+    ui_max_value[time] = np.max(ui[time])
 
 fig = plt.figure()
 ax = plt.axes(xlim = (0, x_count*x_step), ylim = (-0.00000005, 0.00000005))
