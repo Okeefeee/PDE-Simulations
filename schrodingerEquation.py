@@ -69,7 +69,7 @@ def init():
     return line,
 
 def animate(i):
-    line.set_data(x, ui[i])
+    line.set_data(x, ui_max_value[i])
     #max_value = max(ui[i])
     #min_value = min(ui[i])
     #plt.axes(xlim = (0, x_count*x_step), ylim = (min_value, max_value))
