@@ -30,7 +30,7 @@ u = np.zeros((t_count,x_count), dtype = 'complex_')
 
 for i in range(x_count):
     #u[0][i] = np.exp(-4*np.abs(x[i]-5)**2) + np.exp(-2*np.abs(x[i]-7))
-    u[0][i] = 0.000000001* np.exp(-1*(x[i]-5)**2) 
+    u[0][i] = 1* np.exp(-1*(x[i]-5)**2) 
     #u[0][i] = np.sin(2*np.pi*x[i])
 
 ######## Propogating #########
@@ -41,11 +41,10 @@ for i in range(x_count):
 def propogate(u):
     uf = fft(u) # Take the fast fourier transform of u
     ui = u
-    nonlinear_term = np.zeros(x_count, dtype = 'complex_')
     for time in range(1,t_count):
+        nonlinear_terms = ui[time-1]**(2*sigma + 1)
         for x in range(x_count):
-            nonlinear_term[x] = np.abs(ui[time-1][x])**(2 * sigma) * ui[time-1][x]
-            uf[time][x] = uf[time-1][x] - t_step * complex(0,1) * (k[x]**2 * uf[time-1][x] - nonlinear_term[x]) 
+            uf[time][x] = uf[time-1][x] - t_step * complex(0,1) * (k[x]**2 * uf[time-1][x] - fft(nonlinear_terms)[x])
         ui = ifft(uf)
     return np.real(ui)
 
